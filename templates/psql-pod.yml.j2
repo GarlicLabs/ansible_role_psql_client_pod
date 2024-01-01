@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: psql
+spec:
+  containers:
+    - name: internal-psql
+      image: postgres
+      env:
+       - name: POSTGRES_PASSWORD
+         value: "PasswordForPostgresInThisContainer"
+       - name: DB_HOST
+         value: "{{ psql_postgres_host }}" 
+       - name: DB_USER
+         value: "{{ psql_postgres_username }}"
+       - name: PGPASSWORD
+         value: "{{ psql_postgres_user_password }}"

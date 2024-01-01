@@ -1,0 +1,38 @@
+name: Validate infrastructure as code
+
+on:
+  push:
+    branches:
+      - "dev"
+      - "main"
+  pull_request:
+    branches:
+      - "dev"
+      - "main"
+jobs:
+  Linting:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ansible-lint
+        uses: ansible-community/ansible-lint-action@v6.0.2
+        with:
+          args: "ansible"
+
+  Security:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Ensure results dir
+        run: mkdir -p kics-results/
+      
+      - name: Run kics scan
+        uses: checkmarx/kics-github-action@v1.7.0
+        with:
+          path: ./
+          output_path: kics-results/
+          fail_on: high,medium
+          type: Ansible
+      
+      - name: Remove results directory
+        run: rm -rf kics-results/

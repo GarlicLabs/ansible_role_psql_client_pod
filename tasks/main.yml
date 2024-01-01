@@ -1,0 +1,76 @@
+---
+
+- name: Ensure psql pod is running
+  kubernetes.core.k8s:
+    state: present
+    generate_name: psql-pod
+    definition:
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: psql-pod
+        namespace: "{{ psql_namespace }}"
+      spec:
+        containers:
+          - name: psql-pod
+            image: postgres
+            env:
+            - name: POSTGRES_PASSWORD
+              value: "PasswordForPostgresInThisContainer"
+            - name: PGPASSWORD
+              value: "{{ psql_postgres_user_password }}"
+
+- name: Ensure temp directory for queries exists
+  ansible.builtin.file:
+    path: /tmp/queries
+    state: directory
+  no_log: true
+
+- name: Create query files
+  ansible.builtin.copy:
+    content: "{{ item }}"
+    dest: "/tmp/queries/{{ index }}.sql"
+  loop: "{{ psql_queries }}"
+  loop_control:
+    index_var: index
+  no_log: true
+
+- name: Copy query files to pod
+  kubernetes.core.k8s_cp:
+    namespace: "{{ psql_namespace }}"
+    pod: psql-pod
+    remote_path: /tmp/queries
+    local_path: /tmp/queries
+  no_log: true
+
+- name: Execute sql query in psql pod
+  kubernetes.core.k8s_exec:
+    namespace: "{{ psql_namespace }}"
+    pod: psql-pod
+    command: "psql -h {{ psql_postgres_host }} -U {{ psql_postgres_username }} -f /tmp/queries/{{ index }}.sql"
+  when: psql_just_run is false
+  loop: "{{ psql_queries }}"
+  loop_control:
+    index_var: index
+  retries: 3
+  delay: 3
+  register: result
+  until: result.failed is false
+  no_log: true
+  
+- name: Ensure temp directory for queries is absent
+  ansible.builtin.file:
+    path: /tmp/queries
+    state: absent
+
+- name: Ensure psql-pod is cleaned up
+  kubernetes.core.k8s:
+    state: absent
+    generate_name: psql-pod
+    definition:
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: psql-pod
+        namespace: "{{ psql_namespace }}"
+  when: psql_just_run is false

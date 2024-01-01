@@ -1,0 +1,10 @@
+---
+
+psql_client_state: present
+psql_postgres_host: postgresql.default.svc.cluster.local
+psql_postgres_username: "{{ undef(hint='Specify the username to connect with a postgres database') }}"
+psql_postgres_user_password: "{{ undef(hint='Specify the password for the database user') }}"
+psql_namespace: default
+psql_queries: 
+  - ""
+psql_just_run: false
