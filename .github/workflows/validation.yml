@@ -9,6 +9,8 @@ on:
     branches:
       - "dev"
       - "main"
+  schedule:
+    - cron: "0 7 * * 0"
 jobs:
   Linting:
     runs-on: ubuntu-latest
