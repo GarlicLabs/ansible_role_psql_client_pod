@@ -13,21 +13,21 @@ jobs:
   Linting:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run ansible-lint
-        uses: ansible-community/ansible-lint-action@v6.0.2
+        uses: ansible/ansible-lint@cc7f2f599318aa344fca575c635c2caa6d492a14
         with:
           args: "ansible"
 
   Security:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Ensure results dir
         run: mkdir -p kics-results/
       
       - name: Run kics scan
-        uses: checkmarx/kics-github-action@v1.7.0
+        uses: checkmarx/kics-github-action@3f21d96af19575aae6bf83ebdd7dee91d02fa746
         with:
           path: ./
           output_path: kics-results/
