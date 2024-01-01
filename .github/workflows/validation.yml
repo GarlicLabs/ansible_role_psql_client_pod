@@ -36,3 +36,11 @@ jobs:
       
       - name: Remove results directory
         run: rm -rf kics-results/
+
+  Deprications:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Ensure pluto is present
+        uses: FairwindsOps/pluto/github-action@master
+      - name: Find deprecations
+        run: pluto detect-files -d ./

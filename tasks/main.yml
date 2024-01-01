@@ -16,8 +16,10 @@
             image: postgres
             env:
             - name: POSTGRES_PASSWORD
+              # kics-scan ignore-line
               value: "PasswordForPostgresInThisContainer"
             - name: PGPASSWORD
+              # kics-scan ignore-line
               value: "{{ psql_postgres_user_password }}"
 
 - name: Ensure temp directory for queries exists

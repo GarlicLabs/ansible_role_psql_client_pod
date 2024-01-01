@@ -1,11 +1,9 @@
-ansible_role_psql_client_pod
-=========
+# ansible_role_psql_client_pod
 
 You can give this pod a list of sql queries, they will be executed against a postgres database that is running inside your kubernetes.  
 The idea of this pod is mainly to use it for automation of postgres database tasks.  
 
-Role Variables
---------------
+## Role Variables
 
 ```yaml
 psql_client_state: present
@@ -33,3 +31,15 @@ None.
 ## License
 
 GNU General Public License version 3
+
+## Development
+
+### Linting & static security analyser
+
+Both the linter and the static security analyser are running on each push on the github actions pipeline.  
+
+* As linter [ansible-lint](https://ansible.readthedocs.io/projects/lint/) is used. For installation documentation see [ansible lint installing](https://ansible.readthedocs.io/projects/lint/)
+  * Just run `ansible-lint`
+
+* To check if there are any passwords, tokens... hardcoded, [kics](https://kics.io/index.html) is used to ensure a secure IaC repository.  
+  * Run it locally `docker run -t -v $PWD:/path checkmarx/kics:latest scan -p /path -o "/path/"`
