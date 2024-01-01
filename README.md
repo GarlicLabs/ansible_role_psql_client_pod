@@ -1,5 +1,7 @@
 # ansible_role_psql_client_pod
 
+[![Validate infrastructure as code](https://github.com/NeatLeap/ansible_role_psql_client_pod/actions/workflows/validation.yml/badge.svg)](https://github.com/NeatLeap/ansible_role_psql_client_pod/actions/workflows/validation.yml)
+
 You can give this pod a list of sql queries, they will be executed against a postgres database that is running inside your kubernetes.  
 The idea of this pod is mainly to use it for automation of postgres database tasks.  
 
