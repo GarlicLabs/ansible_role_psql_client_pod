@@ -33,6 +33,7 @@
   ansible.builtin.copy:
     content: "{{ item }}"
     dest: "/tmp/queries/{{ index }}.sql"
+    mode: 0600
   loop: "{{ psql_queries }}"
   loop_control:
     index_var: index

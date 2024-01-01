@@ -5,10 +5,6 @@ galaxy_info:
 
   license: GPL-3.0-only
   min_ansible_version: "2.11"
-  platforms:
-  - name: Kubernetes
-    versions:
-      - all
 
   galaxy_tags:
     - kubernetes
