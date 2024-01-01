@@ -16,8 +16,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run ansible-lint
         uses: ansible/ansible-lint@cc7f2f599318aa344fca575c635c2caa6d492a14
-        with:
-          args: "ansible"
 
   Security:
     runs-on: ubuntu-22.04
