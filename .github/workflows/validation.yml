@@ -27,7 +27,7 @@ jobs:
         run: mkdir -p kics-results/
       
       - name: Run kics scan
-        uses: checkmarx/kics-github-action@v1.7.0
+        uses: checkmarx/kics-github-action@v1.7.12
         with:
           path: ./
           output_path: kics-results/
@@ -41,6 +41,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Ensure pluto is present
-        uses: FairwindsOps/pluto/github-action@master
+        uses: FairwindsOps/pluto/github-action@ba8fec507d0e5ae0960530a60cd519875704a4b3
       - name: Find deprecations
         run: pluto detect-files -d ./
