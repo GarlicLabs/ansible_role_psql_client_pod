@@ -26,6 +26,7 @@
   ansible.builtin.file:
     path: /tmp/queries
     state: directory
+    mode: 0600
   no_log: true
 
 - name: Create query files
