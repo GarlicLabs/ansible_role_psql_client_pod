@@ -1,6 +1,6 @@
 galaxy_info:
   author: ngotzmann, lsiemer
-  namespace: neatleap
+  namespace: garliclabs
   description: Spins up a pod with a postgres client and executes given sql queries.  
 
   license: GPL-3.0-only
